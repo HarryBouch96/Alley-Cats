@@ -1,10 +1,15 @@
+using System.Collections;
 using UnityEngine;
 
 public class camControl : MonoBehaviour
 {
     Camera cam;
     GameObject player;
-    Ray ray;
+
+    // Ray ray;
+    public Vector3 offset;
+    public Transform camFollowTransform;
+    public BoxCollider2D bounds;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -14,11 +19,16 @@ public class camControl : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
-        ray = new Ray(
-            cam.transorm.position,
-            (player.transform.position - camera.transform.position).normalized
+        // ray = new Ray(
+        //     cam.transorm.position,
+        //     (player.transform.position - GetComponent<Camera>().transform.position).normalized
+        // );
+        this.transform.position = new Vector3(
+            camFollowTransform.position.x + offset.x,
+            this.transform.position.y + offset.y,
+            camFollowTransform.position.z + offset.z
         );
     }
 }
