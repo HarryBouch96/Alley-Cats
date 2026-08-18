@@ -13,6 +13,7 @@ public class camControl : MonoBehaviour
     private Camera cam;
     private float camHeight;
     private float camWidth;
+    private Vector3 startPos;
 
     private Vector3 velocity = Vector3.zero;
 
@@ -25,13 +26,15 @@ public class camControl : MonoBehaviour
         cam = Camera.main;
         camHeight = cam.orthographicSize;
         camWidth = camHeight * cam.aspect;
-        Debug.Log(camHeight);
+        startPos = transform.position;
+        Debug.Log(startPos);
     }
 
     // Update is called once per frame
     void LateUpdate()
     {
-        deadzones.y = (float)(camHeight - (camHeight * 0.1));
+        deadzones.x = (float)(Mathf.Abs(startPos.x - (camWidth * 0.75f)));
+        deadzones.y = (float)(Mathf.Abs(startPos.y - (camHeight * 0.5f)));
         Vector3 targetPos = target.position;
         Vector3 currentPos = transform.position;
 
