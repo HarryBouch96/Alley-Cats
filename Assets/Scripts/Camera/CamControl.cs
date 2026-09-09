@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class camControl : MonoBehaviour
+public class CamControl : MonoBehaviour
 {
     [Header("Follow")]
     public Transform target;
