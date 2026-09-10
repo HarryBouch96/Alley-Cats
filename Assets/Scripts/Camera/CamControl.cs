@@ -4,35 +4,41 @@ using UnityEngine;
 public class CamControl : MonoBehaviour
 {
     [Header("Follow")]
-    public Transform target;
     public float smoothTime = 0.3f;
 
     [Header("Deadzones")]
     public Vector2 deadzones = new Vector2(2f, 1f);
 
-    private Camera cam;
-    private float camHeight;
-    private float camWidth;
-    private Vector3 startPos;
-
-    private Vector3 velocity = Vector3.zero;
-
     [Header("Bounds")]
     public BoxCollider2D mapBounds;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private Camera cam;
+    private Vector3 startPos;
+    private Vector3 velocity = Vector3.zero;
+    private Transform target;
+    private float camHeight;
+    private float camWidth;
+
+    private void Start()
     {
         cam = Camera.main;
         camHeight = cam.orthographicSize;
         camWidth = camHeight * cam.aspect;
         startPos = transform.position;
-        Debug.Log(startPos);
     }
 
-    // Update is called once per frame
-    void LateUpdate()
+    public void SetTarget(Transform newTarget)
     {
+        target = newTarget;
+    }
+
+    private void LateUpdate()
+    {
+        if (target == null)
+        {
+            return;
+        }
+
         deadzones.x = (float)(Mathf.Abs(startPos.x - (camWidth * 0.75f)));
         deadzones.y = (float)(Mathf.Abs(startPos.y - (camHeight * 0.5f)));
         Vector3 targetPos = target.position;
@@ -76,7 +82,7 @@ public class CamControl : MonoBehaviour
         );
     }
 
-    void DrawDeadzone()
+    private void DrawDeadzone()
     {
         Gizmos.color = Color.green;
         Gizmos.DrawWireCube(transform.position, new Vector3(deadzones.x, deadzones.y, 0));

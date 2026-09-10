@@ -9,45 +9,39 @@ public class SlingshotController : MonoBehaviour
     [Tooltip(
         "The transform component of the Launch Point game object from which the rubber band is drawn."
     )]
-    Transform launchPoint;
+    private Transform launchPoint;
 
     [SerializeField]
     [Tooltip(
         "The transform component of the Left Band Anchor game object that the start of the rubber band is attached to."
     )]
-    Transform leftBandAnchor;
+    private Transform leftBandAnchor;
 
     [SerializeField]
     [Tooltip(
         "The transform component of the Left Band Anchor game object that the end of the rubber band is attached to."
     )]
-    Transform rightBandAnchor;
-
-    [SerializeField]
-    [Tooltip("The rigidbody component of the Cat game object to be launched from the slingshot.")]
-    Rigidbody catRb;
+    private Transform rightBandAnchor;
 
     [Header("Launch settings")]
     [Space(10)]
     [SerializeField]
     [Tooltip("The maximum distance the rubber band can be stretched from the launch point.")]
-    float maxDragDistance = 3f;
+    private float maxDragDistance = 3f;
 
     [SerializeField]
     [Tooltip("The amount of force applied to the cat per unit of drag distance.")]
-    float slingshotPower = 10f;
+    private float slingshotPower = 10f;
 
-    private Camera mainCamera;
+    private Camera cam;
+    private CatController loadedCat;
     private LineRenderer dragLine;
-    private bool hasLaunched = false;
+    private bool hasLaunched;
 
     private void Start()
     {
-        mainCamera = Camera.main;
+        cam = Camera.main;
         dragLine = GetComponent<LineRenderer>();
-
-        // Prevent physics from affecting the cat until it is launched
-        catRb.isKinematic = true;
 
         // Disable the line until the player begins dragging
         dragLine.enabled = false;
@@ -55,8 +49,8 @@ public class SlingshotController : MonoBehaviour
 
     private void Update()
     {
-        // Player is not dragging or cat has already been launched
-        if (Mouse.current == null || hasLaunched)
+        // No cat loaded or cat has already been launched
+        if (loadedCat == null || hasLaunched)
         {
             return;
         }
@@ -92,7 +86,7 @@ public class SlingshotController : MonoBehaviour
         Vector3 targetPosition = launchPoint.position + offset;
         targetPosition.z = launchPoint.position.z;
 
-        catRb.position = targetPosition;
+        loadedCat.SetAimPosition(targetPosition);
 
         dragLine.SetPosition(0, leftBandAnchor.position);
         dragLine.SetPosition(1, targetPosition);
@@ -102,11 +96,10 @@ public class SlingshotController : MonoBehaviour
     private void Launch()
     {
         hasLaunched = true;
-        Vector3 dragVector = launchPoint.position - catRb.position;
 
-        catRb.isKinematic = false;
-        catRb.AddForce(dragVector * slingshotPower, ForceMode.Impulse);
+        Vector3 dragVector = launchPoint.position - loadedCat.transform.position;
 
+        loadedCat.Launch(dragVector * slingshotPower);
         dragLine.enabled = false;
     }
 
@@ -117,12 +110,19 @@ public class SlingshotController : MonoBehaviour
         Vector3 screenPosition = new Vector3(
             mousePosition.x,
             mousePosition.y,
-            Mathf.Abs(mainCamera.transform.position.z - launchPoint.position.z)
+            Mathf.Abs(cam.transform.position.z - launchPoint.position.z)
         );
 
-        Vector3 worldPosition = mainCamera.ScreenToWorldPoint(screenPosition);
+        Vector3 worldPosition = cam.ScreenToWorldPoint(screenPosition);
         worldPosition.z = launchPoint.position.z;
 
         return worldPosition;
+    }
+
+    public void LoadCat(CatController cat)
+    {
+        hasLaunched = false;
+        loadedCat = cat;
+        loadedCat.ResetForShot(launchPoint.position);
     }
 }
