@@ -4,32 +4,31 @@ using UnityEngine;
 public class CamControl : MonoBehaviour
 {
     [Header("Follow")]
-    public float smoothTime = 0.3f;
+    [SerializeField]
+    [Tooltip("The time in seconds for the camera to catch up to the desired position.")]
+    private float smoothTime = 0.3f;
 
-    [Header("Deadzones")]
-    public Vector2 deadzones = new Vector2(2f, 1f);
+    [Header("Deadzone")]
+    [SerializeField]
+    [Tooltip(
+        "The width and height of the deadzone as percentages of the camera's width and height."
+    )]
+    private Vector2 deadzoneSize = new Vector2(0.75f, 0.5f);
 
     [Header("Bounds")]
-    public BoxCollider2D mapBounds;
+    [SerializeField]
+    [Tooltip(
+        "The Environment's 2D box collider that defines the width and height of the map bounds."
+    )]
+    private BoxCollider2D mapBounds;
 
     private Camera cam;
-    private Vector3 startPos;
     private Vector3 velocity = Vector3.zero;
     private Transform target;
-    private float camHeight;
-    private float camWidth;
 
     private void Start()
     {
-        cam = Camera.main;
-        camHeight = cam.orthographicSize;
-        camWidth = camHeight * cam.aspect;
-        startPos = transform.position;
-    }
-
-    public void SetTarget(Transform newTarget)
-    {
-        target = newTarget;
+        cam = GetComponent<Camera>();
     }
 
     private void LateUpdate()
@@ -39,41 +38,67 @@ public class CamControl : MonoBehaviour
             return;
         }
 
-        deadzones.x = (float)(Mathf.Abs(startPos.x - (camWidth * 0.75f)));
-        deadzones.y = (float)(Mathf.Abs(startPos.y - (camHeight * 0.5f)));
-        Vector3 targetPos = target.position;
-        Vector3 currentPos = transform.position;
+        // Get the target's viewport coordinates
+        // X and Y run from (0,0) at bottom-left to (1,1) at top-right
+        // Z is its depth in front of the camera, in world units
+        Vector3 viewportPos = cam.WorldToViewportPoint(target.position);
 
-        Vector3 cutoffPos = targetPos - currentPos;
-        Vector3 desiredPos = currentPos;
+        float deadzoneLeft = (1f - deadzoneSize.x) / 2f;
+        float deadzoneRight = 1f - deadzoneLeft;
+        float deadzoneBottom = (1f - deadzoneSize.y) / 2f;
+        float deadzoneTop = 1f - deadzoneBottom;
 
-        if (Mathf.Abs(cutoffPos.x) > deadzones.x / 2f)
+        Vector3 desiredPos = transform.position;
+
+        // Find the nearest point inside the deadzone
+        Vector3 deadzonePoint = new Vector3(
+            Mathf.Clamp(viewportPos.x, deadzoneLeft, deadzoneRight),
+            Mathf.Clamp(viewportPos.y, deadzoneBottom, deadzoneTop),
+            viewportPos.z
+        );
+
+        // Convert that point to world coordinates at the target's depth
+        Vector3 deadzoneWorldPoint = cam.ViewportToWorldPoint(deadzonePoint);
+
+        // Move just far enough to bring the target back to the deadzone edge
+        if (viewportPos.x < deadzoneLeft || viewportPos.x > deadzoneRight)
         {
-            desiredPos.x = targetPos.x - (deadzones.x / 2f * Mathf.Sign(cutoffPos.x));
-        }
-        if (Mathf.Abs(cutoffPos.y) > deadzones.y / 2f)
-        {
-            desiredPos.y = targetPos.y - (deadzones.y / 2f * Mathf.Sign(cutoffPos.y));
+            desiredPos.x += target.position.x - deadzoneWorldPoint.x;
         }
 
+        if (viewportPos.y < deadzoneBottom || viewportPos.y > deadzoneTop)
+        {
+            desiredPos.y += target.position.y - deadzoneWorldPoint.y;
+        }
+
+        // Clamp the desired position to the map bounds
+        // accounting for the camera's width and height
         if (mapBounds != null)
         {
+            // Calculate width and height of the camera view at the target depth
+            float depth = target.position.z - cam.transform.position.z;
+            Vector3 bottomLeft = cam.ViewportToWorldPoint(new Vector3(0f, 0f, depth));
+            Vector3 topRight = cam.ViewportToWorldPoint(new Vector3(1f, 1f, depth));
+
+            float halfViewWidth = (topRight.x - bottomLeft.x) / 2f;
+            float halfViewHeight = (topRight.y - bottomLeft.y) / 2f;
+
             Bounds bounds = mapBounds.bounds;
+
             desiredPos.x = Mathf.Clamp(
                 desiredPos.x,
-                bounds.min.x + camWidth,
-                bounds.max.x - camWidth
+                bounds.min.x + halfViewWidth,
+                bounds.max.x - halfViewWidth
             );
+
             desiredPos.y = Mathf.Clamp(
                 desiredPos.y,
-                bounds.min.y + camHeight,
-                bounds.max.y - camHeight
+                bounds.min.y + halfViewHeight,
+                bounds.max.y - halfViewHeight
             );
         }
 
-        desiredPos.z = transform.position.z;
-
-        //make movement smooth
+        // Move the camera smoothly to the desired position
         transform.position = Vector3.SmoothDamp(
             transform.position,
             desiredPos,
@@ -82,9 +107,8 @@ public class CamControl : MonoBehaviour
         );
     }
 
-    private void DrawDeadzone()
+    public void SetTarget(Transform newTarget)
     {
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireCube(transform.position, new Vector3(deadzones.x, deadzones.y, 0));
+        target = newTarget;
     }
 }
