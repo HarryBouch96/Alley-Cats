@@ -6,8 +6,8 @@ public class SlingshotController : MonoBehaviour
     [Header("References")]
     [Space(10)]
     [SerializeField]
-    [Tooltip(
-        "The transform component of the Launch Point game object from which the rubber band is drawn."
+    [Tooltip( 
+        "The transform component of the Launch Point game object from which the cat is launched."
     )]
     private Transform launchPoint;
 
