@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 39781cc3132ef4ccda60b1eb83f666c4
+guid: 152095147e5492c41a9718b9b09863a4
 ModelImporter:
   serializedVersion: 18
   fileIDToRecycleName:
@@ -7,7 +7,7 @@ ModelImporter:
     400000: //RootNode
     2300000: //RootNode
     3300000: //RootNode
-    4300000: Building Sky_small_color01
+    4300000: Building Sky_big_color01
     9500000: //RootNode
   materials:
     importMaterials: 0
@@ -76,5 +76,5 @@ AssetOrigin:
   productId: 58899
   packageName: SimplePoly City - Low Poly Assets
   packageVersion: 1.2.3
-  assetPath: Assets/SimplePoly City - Low Poly Assets/Models/Building Sky_small_color01.fbx
+  assetPath: Assets/SimplePoly City - Low Poly Assets/Models/Building Sky_big_color01.fbx
   uploadId: 171409
