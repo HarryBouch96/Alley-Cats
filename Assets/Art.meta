@@ -1,9 +1,5 @@
 fileFormatVersion: 2
-<<<<<<<< HEAD:Assets/GameObjects.meta
-guid: ea26ca142fd8841b59ce125357ec925c
-========
 guid: 1753fe318ada72945aee93e54caf3618
->>>>>>>> feature/alleyway-ground:Assets/Art.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
