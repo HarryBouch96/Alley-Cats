@@ -22,19 +22,17 @@ public class LevelManager : MonoBehaviour
     [Tooltip("The number of cats the player should start with on this level.")]
     private int catCount = 3;
 
-    private enum LevelState
-    {
-        Playing,
-        Complete,
-        GameOver,
-    }
-
-    private LevelState state = LevelState.Playing;
     private CatController activeCat;
     private CamControl camControl;
+    private GameManager gameManager;
+    private UIManager uiManager;
 
     private void Start()
     {
+        gameManager = FindFirstObjectByType<GameManager>();
+        uiManager = FindFirstObjectByType<UIManager>();
+        uiManager.SetCatCount(catCount);
+
         // Create one cat and reuse it for every attempt in this level
         activeCat = Instantiate(catPrefab);
         activeCat.ShotFinished += ShotFinishedHandler;
@@ -44,38 +42,32 @@ public class LevelManager : MonoBehaviour
         camControl = Camera.main.GetComponent<CamControl>();
         camControl.SetTarget(activeCat.transform);
 
-        StartNewShot();
+        slingshot.LoadCat(activeCat);
     }
 
     private void ShotFinishedHandler(CatController cat)
     {
-        if (state == LevelState.Playing)
+        if (gameManager.State == GameManager.GameState.Playing)
         {
+            catCount--;
+            uiManager.SetCatCount(catCount);
+
             if (catCount > 0)
             {
-                print("Starting a new shot! 🎯");
-                StartNewShot();
+                slingshot.LoadCat(activeCat);
             }
             else
             {
-                state = LevelState.GameOver;
-                print("No cats left! Game over!!! 😞");
+                gameManager.GameOver();
             }
         }
     }
 
     private void LevelCompleteHandler()
     {
-        if (state == LevelState.Playing)
+        if (gameManager.State == GameManager.GameState.Playing)
         {
-            state = LevelState.Complete;
-            print("Level complete!!! 🏆");
+            gameManager.LevelComplete();
         }
-    }
-
-    private void StartNewShot()
-    {
-        catCount--;
-        slingshot.LoadCat(activeCat);
     }
 }
