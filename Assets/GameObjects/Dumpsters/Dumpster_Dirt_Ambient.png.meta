@@ -1,9 +1,5 @@
 fileFormatVersion: 2
-<<<<<<<< HEAD:Assets/GameObjects/Cat/GingerTexture.png.meta
-guid: 61f719a8855ef864ea58a900736be7eb
-========
-guid: 1b0d4be9ad2330347b9fc901dd406841
->>>>>>>> feature/alleyway-ground:Assets/Art/Sprites/Ground/autumn_leaves.png.meta
+guid: b479039ed2f4d8e4ba818a533f5127a7
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -47,7 +43,7 @@ TextureImporter:
   nPOTScale: 1
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 0
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -58,11 +54,7 @@ TextureImporter:
   alphaUsage: 1
   alphaIsTransparency: 0
   spriteTessellationDetail: -1
-<<<<<<<< HEAD:Assets/GameObjects/Cat/GingerTexture.png.meta
   textureType: 0
-========
-  textureType: 8
->>>>>>>> feature/alleyway-ground:Assets/Art/Sprites/Ground/autumn_leaves.png.meta
   textureShape: 1
   singleChannelComponent: 0
   flipbookRows: 1
@@ -121,7 +113,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
