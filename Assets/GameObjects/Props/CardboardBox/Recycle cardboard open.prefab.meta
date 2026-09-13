@@ -10,6 +10,5 @@ AssetOrigin:
   productId: 316725
   packageName: Trash bag & Trash box
   packageVersion: 1.3.0
-  assetPath: Assets/Hash Game studios/Trash Bag & Trash Box/Resources/Prefabs/Recycle
-    cardboard/Recycle cardboard open.prefab
+  assetPath: Assets/GameObjects/Props/CardboardBox/Recycle cardboard open.prefab
   uploadId: 752217

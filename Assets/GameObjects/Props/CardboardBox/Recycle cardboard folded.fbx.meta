@@ -110,6 +110,5 @@ AssetOrigin:
   productId: 316725
   packageName: Trash bag & Trash box
   packageVersion: 1.3.0
-  assetPath: Assets/Hash Game studios/Trash Bag & Trash Box/Meshes/Recycle cardboard/Recycle
-    cardboard folded.fbx
+  assetPath: Assets/GameObjects/Props/CardboardBox/Recycle cardboard folded.fbx
   uploadId: 752217

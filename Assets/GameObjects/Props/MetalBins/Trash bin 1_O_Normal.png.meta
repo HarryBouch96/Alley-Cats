@@ -133,6 +133,5 @@ AssetOrigin:
   productId: 316725
   packageName: Trash bag & Trash box
   packageVersion: 1.3.0
-  assetPath: Assets/Hash Game studios/Trash Bag & Trash Box/Textures/Trash bin 1/Orange/Trash
-    bin 1_O_Normal.png
+  assetPath: Assets/GameObjects/Props/MetalBins/Trash bin 1_O_Normal.png
   uploadId: 752217

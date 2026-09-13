@@ -133,6 +133,5 @@ AssetOrigin:
   productId: 316725
   packageName: Trash bag & Trash box
   packageVersion: 1.3.0
-  assetPath: Assets/Hash Game studios/Trash Bag & Trash Box/Textures/Trash bin 2/Machinery/Trash
-    bin 2_M_Albedo.png
+  assetPath: Assets/GameObjects/Props/MetalBins/Trash bin 2_M_Albedo.png
   uploadId: 752217

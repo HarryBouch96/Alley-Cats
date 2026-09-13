@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 34f4569a3ba94f44694e517b3c16008d
+guid: 874a51bc3dbb31b478847284ffe9c772
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -69,11 +69,11 @@ ModelImporter:
     strictVertexDataChecks: 0
   tangentSpace:
     normalSmoothAngle: 60
-    normalImportMode: 0
-    tangentImportMode: 3
+    normalImportMode: 2
+    tangentImportMode: 2
     normalCalculationMode: 4
     legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
-    blendShapeNormalImportMode: 1
+    blendShapeNormalImportMode: 2
     normalSmoothingSource: 0
   referencedClips: []
   importAnimation: 0
@@ -110,5 +110,6 @@ AssetOrigin:
   productId: 316725
   packageName: Trash bag & Trash box
   packageVersion: 1.3.0
-  assetPath: Assets/GameObjects/Props/CardboardBox/Recycle cardboard closed.fbx
+  assetPath: Assets/Hash Game studios/Trash Bag & Trash Box/Meshes/Trash bag/Trash
+    bag 1_Collider.fbx
   uploadId: 752217
