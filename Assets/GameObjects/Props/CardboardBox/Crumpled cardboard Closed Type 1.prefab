@@ -51,7 +51,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: a627bc86dbf2c2a4ba8cbc2396d99798, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: a50460b95baf0704081fb9254819abce, type: 2}
+      objectReference: {fileID: 2100000, guid: 492a90290709f6f458d273ea01c396e1, type: 2}
     - target: {fileID: 919132149155446097, guid: a627bc86dbf2c2a4ba8cbc2396d99798, type: 3}
       propertyPath: m_Name
       value: Crumpled cardboard Closed Type 1
