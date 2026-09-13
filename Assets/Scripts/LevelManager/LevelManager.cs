@@ -33,6 +33,7 @@ public class LevelManager : MonoBehaviour
     private CamControl camControl;
     private GameManager gameManager;
     private UIManager uiManager;
+    private AudioManager audioManager;
     private int currentCatCount;
 
     // The minimum of number of shots to complete the level

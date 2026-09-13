@@ -42,6 +42,7 @@ public class RatManager : MonoBehaviour
     }
 
     [SerializeField]
+    [Tooltip("The order the rats jump in.")]
     private JumpPattern jumpPattern;
 
     private float ratWidth;
