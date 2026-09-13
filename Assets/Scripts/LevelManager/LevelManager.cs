@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class LevelManager : MonoBehaviour
@@ -19,22 +20,33 @@ public class LevelManager : MonoBehaviour
     [Header("Level settings")]
     [Space(10)]
     [SerializeField]
-    [Tooltip("The number of cats the player should start with on this level.")]
-    private int catCount = 3;
+    [Tooltip(
+        "The number of cats the player should start with on this level (must be equal to maxScore + 1)."
+    )]
+    private int maxCatCount = 4;
 
-    private enum LevelState
-    {
-        Playing,
-        Complete,
-        GameOver,
-    }
+    [SerializeField]
+    [Tooltip("The maximum score achievable")]
+    private int maxScore = 3;
 
-    private LevelState state = LevelState.Playing;
     private CatController activeCat;
     private CamControl camControl;
+    private GameManager gameManager;
+    private UIManager uiManager;
+    private int currentCatCount;
+
+    // The minimum of number of shots to complete the level
+    private int minShots = 2;
 
     private void Start()
     {
+        currentCatCount = maxCatCount;
+
+        gameManager = FindFirstObjectByType<GameManager>();
+        uiManager = FindFirstObjectByType<UIManager>();
+        uiManager.SetCatCount(currentCatCount);
+        uiManager.ClearScore();
+
         // Create one cat and reuse it for every attempt in this level
         activeCat = Instantiate(catPrefab);
         activeCat.ShotFinished += ShotFinishedHandler;
@@ -44,38 +56,53 @@ public class LevelManager : MonoBehaviour
         camControl = Camera.main.GetComponent<CamControl>();
         camControl.SetTarget(activeCat.transform);
 
-        StartNewShot();
+        slingshot.LoadCat(activeCat);
     }
 
     private void ShotFinishedHandler(CatController cat)
     {
-        if (state == LevelState.Playing)
+        if (gameManager.State == GameManager.GameState.Playing)
         {
-            if (catCount > 0)
+            currentCatCount--;
+            uiManager.SetCatCount(currentCatCount);
+
+            if (currentCatCount > 0)
             {
-                print("Starting a new shot! 🎯");
-                StartNewShot();
+                slingshot.LoadCat(activeCat);
             }
             else
             {
-                state = LevelState.GameOver;
-                print("No cats left! Game over!!! 😞");
+                gameManager.GameOver();
             }
         }
     }
 
     private void LevelCompleteHandler()
     {
-        if (state == LevelState.Playing)
+        if (gameManager.State == GameManager.GameState.Playing)
         {
-            state = LevelState.Complete;
-            print("Level complete!!! 🏆");
+            int score = CalculateScore();
+            uiManager.SetScore(score, maxScore);
+            gameManager.LevelComplete();
         }
     }
 
-    private void StartNewShot()
+    private int CalculateScore()
     {
-        catCount--;
-        slingshot.LoadCat(activeCat);
+        // + 1 because the active cat is still in play until it stops moving
+        float shotsUsed = maxCatCount - currentCatCount + 1;
+
+        // The number of shots taken above the minimum required
+        float wastedShots = shotsUsed - minShots;
+
+        // The most wasted shots while still winning
+        float worstCase = maxCatCount - minShots;
+
+        if (worstCase == 0f)
+        {
+            return maxScore;
+        }
+
+        return (int)Math.Round(maxScore - wastedShots / worstCase * (maxScore - 1));
     }
 }

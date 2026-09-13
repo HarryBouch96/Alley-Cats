@@ -6,7 +6,7 @@ public class SlingshotController : MonoBehaviour
     [Header("References")]
     [Space(10)]
     [SerializeField]
-    [Tooltip( 
+    [Tooltip(
         "The transform component of the Launch Point game object from which the cat is launched."
     )]
     private Transform launchPoint;
@@ -37,6 +37,7 @@ public class SlingshotController : MonoBehaviour
     private CatController loadedCat;
     private LineRenderer dragLine;
     private bool hasLaunched;
+    private GameManager gameManager;
 
     private void Start()
     {
@@ -45,10 +46,19 @@ public class SlingshotController : MonoBehaviour
 
         // Disable the line until the player begins dragging
         dragLine.enabled = false;
+
+        gameManager = FindFirstObjectByType<GameManager>();
     }
 
     private void Update()
     {
+        // Disable aiming while game is paused
+        if (gameManager.State != GameManager.GameState.Playing)
+        {
+            dragLine.enabled = false;
+            return;
+        }
+
         // No cat loaded or cat has already been launched
         if (loadedCat == null || hasLaunched)
         {
