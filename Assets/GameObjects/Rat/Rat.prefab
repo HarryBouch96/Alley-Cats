@@ -74,6 +74,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8306587833998486541}
   - component: {fileID: 5026751882962780673}
+  - component: {fileID: 4647039879996914010}
   m_Layer: 0
   m_Name: RatMesh
   m_TagString: Untagged
@@ -181,6 +182,29 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.18543524, y: 0.36627245, z: 0.104667366}
     m_Extent: {x: 1.2605281, y: 0.61699253, z: 0.6910473}
   m_DirtyAABB: 0
+--- !u!136 &4647039879996914010
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 911850604504111791}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.67
+  m_Height: 2.08
+  m_Direction: 0
+  m_Center: {x: 0.03, y: 0.01, z: 0.46}
 --- !u!1 &1269326238225941500
 GameObject:
   m_ObjectHideFlags: 0
