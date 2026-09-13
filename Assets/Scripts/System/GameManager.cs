@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -10,12 +11,17 @@ public class GameManager : MonoBehaviour
     {
         MainMenu,
         Playing,
+        Waiting,
         Paused,
         LevelComplete,
         GameOver,
     }
 
     public GameState State { get; private set; } = GameState.MainMenu;
+
+    [SerializeField]
+    [Tooltip("The number of seconds to wait before switching to the LevelComplete state.")]
+    private float lvlCompleteWait = 5f;
 
     private const int MainMenuIdx = 0;
     private const int FirstLevelIdx = 1;
@@ -85,7 +91,8 @@ public class GameManager : MonoBehaviour
 
     public void LevelComplete()
     {
-        SetState(GameState.LevelComplete);
+        SetState(GameState.Waiting);
+        StartCoroutine(CompleteAfterSeconds(lvlCompleteWait));
     }
 
     public void GameOver()
@@ -98,5 +105,11 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(buildIndex);
 
         SetState(buildIndex == MainMenuIdx ? GameState.MainMenu : GameState.Playing);
+    }
+
+    private IEnumerator CompleteAfterSeconds(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        SetState(GameState.LevelComplete);
     }
 }
