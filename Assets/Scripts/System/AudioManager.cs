@@ -28,7 +28,9 @@ public class AudioManager : MonoBehaviour
     private AudioClip gameplayClip;
 
     [SerializeField]
-    [Tooltip("The music clip to play in menus such as Main Menu, Pause Menu, and end-of-level screens.")]
+    [Tooltip(
+        "The music clip to play in menus such as Main Menu, Pause Menu, and end-of-level screens."
+    )]
     private AudioClip menuClip;
 
     [SerializeField]

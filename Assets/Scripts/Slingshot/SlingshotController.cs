@@ -23,6 +23,14 @@ public class SlingshotController : MonoBehaviour
     )]
     private Transform rightBandAnchor;
 
+    [SerializeField]
+    [Tooltip("The audio clip to play when stretching the slingshot band to aim.")]
+    private AudioClip aimAudioClip;
+
+    [SerializeField]
+    [Tooltip("The audio clip to play when the slingshot band is released.")]
+    private AudioClip releaseAudioClip;
+
     [Header("Launch settings")]
     [Space(10)]
     [SerializeField]
@@ -34,15 +42,18 @@ public class SlingshotController : MonoBehaviour
     private float slingshotPower = 10f;
 
     private Camera cam;
+    private GameManager gameManager;
     private CatController loadedCat;
     private LineRenderer dragLine;
+    private AudioSource audioSource;
     private bool hasLaunched;
-    private GameManager gameManager;
+    private bool isAiming = false;
 
     private void Start()
     {
         cam = Camera.main;
         dragLine = GetComponent<LineRenderer>();
+        audioSource = GetComponent<AudioSource>();
 
         // Disable the line until the player begins dragging
         dragLine.enabled = false;
@@ -86,6 +97,12 @@ public class SlingshotController : MonoBehaviour
 
     private void Drag()
     {
+        if (!isAiming)
+        {
+            isAiming = true;
+            audioSource.PlayOneShot(aimAudioClip);
+        }
+
         Vector3 mousePosition = GetMouseWorldPosition();
 
         Vector3 offset = mousePosition - launchPoint.position;
@@ -105,6 +122,9 @@ public class SlingshotController : MonoBehaviour
 
     private void Launch()
     {
+        isAiming = false;
+        audioSource.PlayOneShot(releaseAudioClip);
+
         hasLaunched = true;
 
         Vector3 dragVector = launchPoint.position - loadedCat.transform.position;
@@ -132,6 +152,7 @@ public class SlingshotController : MonoBehaviour
     public void LoadCat(CatController cat)
     {
         hasLaunched = false;
+        isAiming = false;
         loadedCat = cat;
         loadedCat.ResetForShot(launchPoint.position);
     }
