@@ -46,29 +46,6 @@ public class UIManager : MonoBehaviour
     private Transform livesContainer;
     private Transform scoreContainer;
 
-    private void Start()
-    {
-        livesContainer = hud.transform.Find("Lives");
-        scoreContainer = lvlCompleteScreen.transform.Find("Score");
-
-        // Subscribe to GameManager state changes
-        gameManager.StateChanged += StateChangedHandler;
-
-        // Get the GameManager state on first load
-        StateChangedHandler(gameManager.State);
-    }
-
-    private void StateChangedHandler(GameManager.GameState state)
-    {
-        mainMenu.SetActive(state == GameManager.GameState.MainMenu);
-        pauseMenu.SetActive(state == GameManager.GameState.Paused);
-        gameOverScreen.SetActive(state == GameManager.GameState.GameOver);
-        lvlCompleteScreen.SetActive(state == GameManager.GameState.LevelComplete);
-
-        // In-game HUD remains active behind Pause Menu and end of level screens
-        hud.SetActive(state != GameManager.GameState.MainMenu);
-    }
-
     // Called by the LevelManager when the number of cats remaining changes
     public void SetCatCount(int count)
     {
