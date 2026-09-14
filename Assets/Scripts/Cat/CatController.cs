@@ -18,9 +18,14 @@ public class CatController : MonoBehaviour
     [Tooltip("How many seconds the cat has to be stationary before the turn ends.")]
     private float stoppedDuration = 3f;
 
+    [SerializeField]
+    [Tooltip("The audio clip to play when the cat pounces.")]
+    private AudioClip pounceAudioClip;
+
     private Rigidbody rb;
     private Bounds levelBounds;
     private float stoppedTimer;
+    private AudioSource audioSource;
     private bool hasLaunched;
     private bool hasBounds;
     private bool hasPounced = false;
@@ -30,6 +35,7 @@ public class CatController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         hasPounced = false;
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void FixedUpdate()
@@ -129,7 +135,7 @@ public class CatController : MonoBehaviour
         if (Mouse.current.leftButton.wasPressedThisFrame && hasLaunched && hasPounced == false)
         {
             hasPounced = true;
-            Debug.Log("POUNCE");
+            audioSource.PlayOneShot(pounceAudioClip);
             Vector3 force = new Vector3(10f, -30f, 0);
             rb.AddForce(force, ForceMode.Impulse);
         }
