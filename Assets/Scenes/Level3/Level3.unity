@@ -10058,6 +10058,10 @@ PrefabInstance:
       propertyPath: slingshot
       value: 
       objectReference: {fileID: 7696561312764268415}
+    - target: {fileID: 5157388462640195524, guid: 10435d84d8e8d444ba41fd40033cf969, type: 3}
+      propertyPath: levelBounds
+      value: 
+      objectReference: {fileID: 735226866}
     - target: {fileID: 5887683121889845847, guid: 10435d84d8e8d444ba41fd40033cf969, type: 3}
       propertyPath: m_Name
       value: LevelManager
@@ -22814,8 +22818,12 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1107377162999281380, guid: 957c949899211364d961e1859db6fa38, type: 3}
+      propertyPath: startX
+      value: -10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1107377162999281380, guid: 957c949899211364d961e1859db6fa38, type: 3}
       propertyPath: numRats
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5638307395547270938, guid: 957c949899211364d961e1859db6fa38, type: 3}
       propertyPath: m_LocalPosition.x
