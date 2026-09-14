@@ -17,6 +17,10 @@ public class LevelManager : MonoBehaviour
     [Tooltip("The golden dumpster for this level.")]
     private DumpsterController dumpster;
 
+    [SerializeField]
+    [Tooltip("The level bounds collider.")]
+    private BoxCollider2D levelBounds;
+
     [Header("Level settings")]
     [Space(10)]
     [SerializeField]
@@ -50,6 +54,7 @@ public class LevelManager : MonoBehaviour
 
         // Create one cat and reuse it for every attempt in this level
         activeCat = Instantiate(catPrefab);
+        activeCat.SetLevelBounds(levelBounds.bounds);
         activeCat.ShotFinished += ShotFinishedHandler;
 
         dumpster.LevelComplete += LevelCompleteHandler;

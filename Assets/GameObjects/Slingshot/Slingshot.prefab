@@ -256,6 +256,7 @@ MonoBehaviour:
   aimAudioClip: {fileID: 8300000, guid: d3ffeb81302f343658d91300db2dd060, type: 3}
   releaseAudioClip: {fileID: 8300000, guid: e9da2b419e01c41f6988f856f16e604e, type: 3}
   maxDragDistance: 25
+  minDragHeight: 1
   slingshotPower: 5
 --- !u!82 &1178565517040304301
 AudioSource:
