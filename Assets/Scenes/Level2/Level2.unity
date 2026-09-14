@@ -9884,9 +9884,21 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1175072109}
     - target: {fileID: 5157388462640195524, guid: 10435d84d8e8d444ba41fd40033cf969, type: 3}
+      propertyPath: minShots
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5157388462640195524, guid: 10435d84d8e8d444ba41fd40033cf969, type: 3}
       propertyPath: slingshot
       value: 
       objectReference: {fileID: 7696561312764268415}
+    - target: {fileID: 5157388462640195524, guid: 10435d84d8e8d444ba41fd40033cf969, type: 3}
+      propertyPath: levelBounds
+      value: 
+      objectReference: {fileID: 735226866}
+    - target: {fileID: 5157388462640195524, guid: 10435d84d8e8d444ba41fd40033cf969, type: 3}
+      propertyPath: maxCatCount
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 5887683121889845847, guid: 10435d84d8e8d444ba41fd40033cf969, type: 3}
       propertyPath: m_Name
       value: LevelManager

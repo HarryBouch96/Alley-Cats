@@ -40,8 +40,9 @@ public class LevelManager : MonoBehaviour
     private AudioManager audioManager;
     private int currentCatCount;
 
-    // The minimum of number of shots to complete the level
-    private int minShots = 2;
+    [SerializeField]
+    [Tooltip("The minimum of number of shots to complete the level")]
+    private int minShots;
 
     private void Start()
     {

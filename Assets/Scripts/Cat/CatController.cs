@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class CatController : MonoBehaviour
 {
@@ -17,22 +18,35 @@ public class CatController : MonoBehaviour
     [Tooltip("How many seconds the cat has to be stationary before the turn ends.")]
     private float stoppedDuration = 3f;
 
+    [SerializeField]
+    [Tooltip("The audio clip to play when the cat pounces.")]
+    private AudioClip pounceAudioClip;
+
     private Rigidbody rb;
     private Bounds levelBounds;
     private float stoppedTimer;
+    private AudioSource audioSource;
     private bool hasLaunched;
     private bool hasBounds;
+    private bool hasPounced = false;
 
     // Cache the Rigidbody before LevelManager starts the first shot
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        hasPounced = false;
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void FixedUpdate()
     {
         CheckCatOutOfBounds();
         CheckCatStopped();
+    }
+
+    private void Update()
+    {
+        CheckPounce();
     }
 
     private void CheckCatOutOfBounds()
@@ -101,6 +115,7 @@ public class CatController : MonoBehaviour
 
         stoppedTimer = 0f;
         hasLaunched = false;
+        hasPounced = false;
     }
 
     public void SetAimPosition(Vector3 position)
@@ -113,6 +128,17 @@ public class CatController : MonoBehaviour
         hasLaunched = true;
         rb.isKinematic = false;
         rb.AddForce(impulse, ForceMode.Impulse);
+    }
+
+    public void CheckPounce()
+    {
+        if (Mouse.current.leftButton.wasPressedThisFrame && hasLaunched && hasPounced == false)
+        {
+            hasPounced = true;
+            audioSource.PlayOneShot(pounceAudioClip);
+            Vector3 force = new Vector3(10f, -30f, 0);
+            rb.AddForce(force, ForceMode.Impulse);
+        }
     }
 
     public void SetLevelBounds(Bounds bounds)
