@@ -264,6 +264,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+<<<<<<< HEAD
+=======
+    - target: {fileID: 124769751410474509, guid: 1d4a443e2842fbd4bbd4c78273f45b53, type: 3}
+      propertyPath: lvlCompleteWait
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1888471480585240702, guid: 1d4a443e2842fbd4bbd4c78273f45b53, type: 3}
+      propertyPath: pauseButtonPrefab
+      value: 
+      objectReference: {fileID: 1772893683221139327, guid: 3155c196011d24c30af52e429984e5b9, type: 3}
+>>>>>>> feature/levels
     - target: {fileID: 4541654460064640352, guid: 1d4a443e2842fbd4bbd4c78273f45b53, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

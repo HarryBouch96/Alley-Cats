@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 public class SlingshotController : MonoBehaviour
@@ -72,6 +73,11 @@ public class SlingshotController : MonoBehaviour
 
         // No cat loaded or cat has already been launched
         if (loadedCat == null || hasLaunched)
+        {
+            return;
+        }
+        //check if player is trying to press the pause button
+        if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
         {
             return;
         }

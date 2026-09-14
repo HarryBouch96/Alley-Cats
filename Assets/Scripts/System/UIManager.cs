@@ -2,6 +2,7 @@ using System;
 using Microsoft.Unity.VisualStudio.Editor;
 using UnityEngine;
 using UnityEngine.SocialPlatforms.Impl;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
@@ -36,6 +37,11 @@ public class UIManager : MonoBehaviour
 
     [SerializeField]
     private GameObject noFishIconPrefab;
+
+    [SerializeField]
+    private GameObject pauseButtonPrefab;
+
+    private GameObject pauseButton;
 
     private Transform livesContainer;
     private Transform scoreContainer;
@@ -96,4 +102,44 @@ public class UIManager : MonoBehaviour
             Destroy(scoreContainer.GetChild(i).gameObject);
         }
     }
+<<<<<<< HEAD
+=======
+
+    public void pauseGame()
+    {
+        if (gameManager == null)
+            return;
+        gameManager.TogglePause();
+    }
+
+    private void Start()
+    {
+        livesContainer = hud.transform.Find("Lives");
+        scoreContainer = lvlCompleteScreen.transform.Find("Score");
+        pauseButton = Instantiate(pauseButtonPrefab, hud.transform, false);
+        Button btnComponent = pauseButton.GetComponent<Button>();
+        if (btnComponent != null)
+        {
+            // This tells the button: "When clicked, run the TogglePauseGame function"
+            btnComponent.onClick.AddListener(pauseGame);
+        }
+
+        // Subscribe to GameManager state changes
+        gameManager.StateChanged += StateChangedHandler;
+
+        // Get the GameManager state on first load
+        StateChangedHandler(gameManager.State);
+    }
+
+    private void StateChangedHandler(GameManager.GameState state)
+    {
+        mainMenu.SetActive(state == GameManager.GameState.MainMenu);
+        pauseMenu.SetActive(state == GameManager.GameState.Paused);
+        gameOverScreen.SetActive(state == GameManager.GameState.GameOver);
+        lvlCompleteScreen.SetActive(state == GameManager.GameState.LevelComplete);
+
+        // In-game HUD remains active behind Pause Menu and end of level screens
+        hud.SetActive(state != GameManager.GameState.MainMenu);
+    }
+>>>>>>> feature/levels
 }
