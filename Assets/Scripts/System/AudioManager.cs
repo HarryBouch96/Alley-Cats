@@ -43,6 +43,9 @@ public class AudioManager : MonoBehaviour
     [Tooltip("The clip to play when a menu button is clicked.")]
     private AudioClip buttonClickClip;
 
+    private bool musicIsMuted = false;
+    private bool ambienceIsMuted = false;
+
     void Start()
     {
         gameManager.StateChanged += StateChangedHandler;
@@ -91,6 +94,13 @@ public class AudioManager : MonoBehaviour
 
     private void PlayMusic(AudioClip clip)
     {
+        if (musicIsMuted)
+        {
+            music.Stop();
+            music.clip = null;
+            return;
+        }
+
         if (music.clip == clip)
         {
             return;
@@ -102,7 +112,7 @@ public class AudioManager : MonoBehaviour
 
     private void SetAmbience(bool enabled)
     {
-        if (enabled)
+        if (enabled && !ambienceIsMuted)
         {
             if (!ambience.isPlaying)
             {
@@ -118,5 +128,17 @@ public class AudioManager : MonoBehaviour
     public void PlayButtonClick()
     {
         soundEffects.PlayOneShot(buttonClickClip);
+    }
+
+    public void ToggleMusic()
+    {
+        musicIsMuted = !musicIsMuted;
+        StateChangedHandler(gameManager.State);
+    }
+
+    public void ToggleAmbience()
+    {
+        ambienceIsMuted = !ambienceIsMuted;
+        StateChangedHandler(gameManager.State);
     }
 }
