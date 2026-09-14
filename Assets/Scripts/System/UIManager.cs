@@ -38,11 +38,6 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private GameObject noFishIconPrefab;
 
-    [SerializeField]
-    private GameObject pauseButtonPrefab;
-
-    private GameObject pauseButton;
-
     private Transform livesContainer;
     private Transform scoreContainer;
 
@@ -80,24 +75,10 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void pauseGame()
-    {
-        if (gameManager == null)
-            return;
-        gameManager.TogglePause();
-    }
-
     private void Start()
     {
         livesContainer = hud.transform.Find("Lives");
         scoreContainer = lvlCompleteScreen.transform.Find("Score");
-        pauseButton = Instantiate(pauseButtonPrefab, hud.transform, false);
-        Button btnComponent = pauseButton.GetComponent<Button>();
-        if (btnComponent != null)
-        {
-            // This tells the button: "When clicked, run the TogglePauseGame function"
-            btnComponent.onClick.AddListener(pauseGame);
-        }
 
         // Subscribe to GameManager state changes
         gameManager.StateChanged += StateChangedHandler;
