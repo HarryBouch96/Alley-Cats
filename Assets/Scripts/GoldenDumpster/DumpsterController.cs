@@ -6,7 +6,7 @@ public class DumpsterController : MonoBehaviour
     public event LevelCompleteHandler LevelComplete;
 
     [SerializeField]
-    [Tooltip("The position of the clearance box taht is checked for obstructions above the lid")]
+    [Tooltip("The position of the clearance box that is checked for obstructions above the lid.")]
     private Vector3 lidClearancePos = new Vector3(0f, 8.44f, 0f);
 
     [SerializeField]
