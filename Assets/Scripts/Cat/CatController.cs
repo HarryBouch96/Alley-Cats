@@ -18,8 +18,10 @@ public class CatController : MonoBehaviour
     private float stoppedDuration = 3f;
 
     private Rigidbody rb;
+    private Bounds levelBounds;
     private float stoppedTimer;
     private bool hasLaunched;
+    private bool hasBounds;
 
     // Cache the Rigidbody before LevelManager starts the first shot
     private void Awake()
@@ -29,7 +31,32 @@ public class CatController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        CheckCatOutOfBounds();
         CheckCatStopped();
+    }
+
+    private void CheckCatOutOfBounds()
+    {
+        if (hasLaunched && hasBounds)
+        {
+            Vector3 position = rb.position;
+
+            bool inside =
+                position.x >= levelBounds.min.x
+                && position.x <= levelBounds.max.x
+                && position.y >= levelBounds.min.y
+                && position.y <= levelBounds.max.y;
+
+            if (inside)
+            {
+                return;
+            }
+
+            // Set hasLaunched back to false so shot
+            // completion is only announced once
+            hasLaunched = false;
+            ShotFinished?.Invoke(this);
+        }
     }
 
     private void CheckCatStopped()
@@ -86,5 +113,11 @@ public class CatController : MonoBehaviour
         hasLaunched = true;
         rb.isKinematic = false;
         rb.AddForce(impulse, ForceMode.Impulse);
+    }
+
+    public void SetLevelBounds(Bounds bounds)
+    {
+        levelBounds = bounds;
+        hasBounds = true;
     }
 }

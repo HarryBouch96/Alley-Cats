@@ -39,6 +39,10 @@ public class SlingshotController : MonoBehaviour
     private float maxDragDistance = 3f;
 
     [SerializeField]
+    [Tooltip("The minimum height the rubber band can be pulled down to.")]
+    private float minDragHeight = 0.5f;
+
+    [SerializeField]
     [Tooltip("The amount of force applied to the cat per unit of drag distance.")]
     private float slingshotPower = 10f;
 
@@ -118,6 +122,7 @@ public class SlingshotController : MonoBehaviour
 
         Vector3 targetPosition = launchPoint.position + offset;
         targetPosition.z = launchPoint.position.z;
+        targetPosition.y = Mathf.Max(targetPosition.y, transform.position.y + minDragHeight);
 
         loadedCat.SetAimPosition(targetPosition);
 
