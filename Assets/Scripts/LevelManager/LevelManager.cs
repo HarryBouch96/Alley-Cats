@@ -42,7 +42,7 @@ public class LevelManager : MonoBehaviour
 
     [SerializeField]
     [Tooltip("The minimum of number of shots to complete the level")]
-    private int minShots;
+    private int minShots = 2;
 
     private void Start()
     {
