@@ -102,8 +102,6 @@ public class UIManager : MonoBehaviour
             Destroy(scoreContainer.GetChild(i).gameObject);
         }
     }
-<<<<<<< HEAD
-=======
 
     public void pauseGame()
     {
@@ -141,5 +139,4 @@ public class UIManager : MonoBehaviour
         // In-game HUD remains active behind Pause Menu and end of level screens
         hud.SetActive(state != GameManager.GameState.MainMenu);
     }
->>>>>>> feature/levels
 }
