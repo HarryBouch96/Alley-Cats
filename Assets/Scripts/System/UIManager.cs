@@ -5,7 +5,7 @@ public class UIManager : MonoBehaviour
     [Header("GameManager")]
     [Space(10)]
     [SerializeField]
-    [Tooltip("The persistent GameManager that handles game state changes and scene loading")]
+    [Tooltip("The persistent GameManager that handles game state changes and scene loading.")]
     private GameManager gameManager;
 
     [Header("Menus, screens, and HUD")]

@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class TutorialHint : MonoBehaviour
+public class Tutorial : MonoBehaviour
 {
     private void Update()
     {
