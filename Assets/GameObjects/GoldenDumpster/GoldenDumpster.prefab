@@ -164,6 +164,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a10d9eba4c473e459e06a1cb6f6f0f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DumpsterController
+  lidClearancePos: {x: 0, y: 8.44, z: 0}
+  lidClearanceSize: {x: 12.2, y: 1, z: 7.5}
 --- !u!198 &584909233333994080
 ParticleSystem:
   m_ObjectHideFlags: 0

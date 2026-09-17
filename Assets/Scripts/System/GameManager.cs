@@ -84,7 +84,7 @@ public class GameManager : MonoBehaviour
         State = newState;
 
         // Freeze gameplay while paused
-        Time.timeScale = newState == GameState.Paused ? 0f : 1f;
+        SetTimeFrozen(newState == GameState.Paused);
 
         StateChanged?.Invoke(newState);
     }
@@ -98,6 +98,11 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         SetState(GameState.GameOver);
+    }
+
+    public void SetTimeFrozen(bool frozen)
+    {
+        Time.timeScale = frozen ? 0f : 1f;
     }
 
     private void LoadScene(int buildIndex)

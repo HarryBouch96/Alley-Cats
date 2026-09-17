@@ -4,6 +4,9 @@ using UnityEngine.InputSystem;
 
 public class SlingshotController : MonoBehaviour
 {
+    public delegate void AimingStartedHandler();
+    public event AimingStartedHandler AimingStarted;
+
     [Header("References")]
     [Space(10)]
     [SerializeField]
@@ -80,7 +83,8 @@ public class SlingshotController : MonoBehaviour
         {
             return;
         }
-        //check if player is trying to press the pause button
+
+        // Check if player is trying to press the pause button
         if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
         {
             return;
@@ -95,7 +99,7 @@ public class SlingshotController : MonoBehaviour
         // Player is still dragging the cat
         if (Mouse.current.leftButton.isPressed)
         {
-            Drag();
+            Aim();
         }
 
         // Player has released the cat
@@ -105,11 +109,12 @@ public class SlingshotController : MonoBehaviour
         }
     }
 
-    private void Drag()
+    private void Aim()
     {
         if (!isAiming)
         {
             isAiming = true;
+            AimingStarted?.Invoke();
             audioSource.PlayOneShot(aimAudioClip);
         }
 

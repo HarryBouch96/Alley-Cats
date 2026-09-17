@@ -128,7 +128,7 @@ SphereCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6774641932241655019}
-  m_Material: {fileID: 13400000, guid: 88317e7c91d21d345bf6611283d62117, type: 2}
+  m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -140,7 +140,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.8805777
+  m_Radius: 1
   m_Center: {x: -0.1415135, y: 0.014674276, z: 0.0014356077}
 --- !u!114 &2296661993606092051
 MonoBehaviour:

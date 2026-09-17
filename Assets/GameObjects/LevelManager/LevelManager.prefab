@@ -47,5 +47,7 @@ MonoBehaviour:
   catPrefab: {fileID: 2296661993606092051, guid: a2e5a4d98b987bf4fae821600adca29e, type: 3}
   slingshot: {fileID: 0}
   dumpster: {fileID: 0}
+  levelBounds: {fileID: 0}
   maxCatCount: 4
   maxScore: 3
+  minShots: 1

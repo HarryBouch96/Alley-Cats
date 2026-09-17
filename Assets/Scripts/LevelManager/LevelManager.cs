@@ -3,6 +3,9 @@ using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
+    public delegate void CatSpawnedHandler(CatController cat);
+    public event CatSpawnedHandler CatSpawned;
+
     [Header("References")]
     [Space(10)]
     [SerializeField]
@@ -37,7 +40,6 @@ public class LevelManager : MonoBehaviour
     private CamControl camControl;
     private GameManager gameManager;
     private UIManager uiManager;
-    private AudioManager audioManager;
     private int currentCatCount;
 
     [SerializeField]
@@ -64,6 +66,7 @@ public class LevelManager : MonoBehaviour
         camControl.SetTarget(activeCat.transform);
 
         slingshot.LoadCat(activeCat);
+        CatSpawned?.Invoke(activeCat);
     }
 
     private void ShotFinishedHandler(CatController cat)

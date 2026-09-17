@@ -5,6 +5,10 @@ public class CatController : MonoBehaviour
 {
     public delegate void ShotFinishedHandler(CatController cat);
     public event ShotFinishedHandler ShotFinished;
+    public delegate void ReachedApexHandler();
+    public event ReachedApexHandler ReachedApex;
+    public delegate void PouncedHandler();
+    public event PouncedHandler Pounced;
 
     [Header("Player turn settings")]
     [Space(10)]
@@ -29,6 +33,7 @@ public class CatController : MonoBehaviour
     private bool hasLaunched;
     private bool hasBounds;
     private bool hasPounced = false;
+    private bool hasReachedApex = false;
 
     // Cache the Rigidbody before LevelManager starts the first shot
     private void Awake()
@@ -40,8 +45,14 @@ public class CatController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        CheckCatOutOfBounds();
+        if (hasLaunched && !hasReachedApex && rb.linearVelocity.y < 0f)
+        {
+            hasReachedApex = true;
+            ReachedApex?.Invoke();
+        }
+
         CheckCatStopped();
+        CheckCatOutOfBounds();
     }
 
     private void Update()
@@ -116,6 +127,7 @@ public class CatController : MonoBehaviour
         stoppedTimer = 0f;
         hasLaunched = false;
         hasPounced = false;
+        hasReachedApex = false;
     }
 
     public void SetAimPosition(Vector3 position)
@@ -138,6 +150,7 @@ public class CatController : MonoBehaviour
             audioSource.PlayOneShot(pounceAudioClip);
             Vector3 force = new Vector3(10f, -30f, 0);
             rb.AddForce(force, ForceMode.Impulse);
+            Pounced?.Invoke();
         }
     }
 

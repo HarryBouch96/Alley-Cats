@@ -9891,7 +9891,7 @@ PrefabInstance:
       objectReference: {fileID: 1175072109}
     - target: {fileID: 5157388462640195524, guid: 10435d84d8e8d444ba41fd40033cf969, type: 3}
       propertyPath: minShots
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5157388462640195524, guid: 10435d84d8e8d444ba41fd40033cf969, type: 3}
       propertyPath: slingshot
@@ -20837,7 +20837,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::camControl
   smoothTime: 0.3
-  deadzoneSize: {x: 0.75, y: 0.5}
+  deadzoneSize: {x: 0.4, y: 0.4}
   mapBounds: {fileID: 735226866}
 --- !u!114 &1873733897
 MonoBehaviour:
