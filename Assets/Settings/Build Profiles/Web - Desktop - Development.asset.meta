@@ -1,15 +1,8 @@
 fileFormatVersion: 2
-<<<<<<<< HEAD:Assets/UI/Tutorial/IdleAnimation.anim.meta
-guid: 48d1648f3ce714d72b390681cb8f0770
-NativeFormatImporter:
-  externalObjects: {}
-  mainObjectFileID: 7400000
-========
 guid: 4bf74e25024ef4778bc24b67d0464a01
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 11400000
->>>>>>>> feature/loadingScreen:Assets/Settings/Build Profiles/Web - Desktop - Development.asset.meta
   userData: 
   assetBundleName: 
   assetBundleVariant: 
