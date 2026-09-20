@@ -1,9 +1,5 @@
 fileFormatVersion: 2
-<<<<<<<< HEAD:Assets/Scripts/Tutorial.meta
-guid: 3eb6caf5d8adfc643ac045439b94dc81
-========
 guid: cbb00b2adf958459e879c12f5a5c9a14
->>>>>>>> feature/loadingScreen:Assets/Settings/Build Profiles.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
