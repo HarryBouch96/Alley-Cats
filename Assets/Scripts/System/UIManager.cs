@@ -26,6 +26,9 @@ public class UIManager : MonoBehaviour
     private GameObject gameOverScreen;
 
     [SerializeField]
+    private GameObject loadingScreen;
+
+    [SerializeField]
     private GameObject catIconPrefab;
 
     [SerializeField]
@@ -89,8 +92,11 @@ public class UIManager : MonoBehaviour
         pauseMenu.SetActive(state == GameManager.GameState.Paused);
         gameOverScreen.SetActive(state == GameManager.GameState.GameOver);
         lvlCompleteScreen.SetActive(state == GameManager.GameState.LevelComplete);
+        loadingScreen.SetActive(state == GameManager.GameState.Loading);
 
         // In-game HUD remains active behind Pause Menu and end of level screens
-        hud.SetActive(state != GameManager.GameState.MainMenu);
+        hud.SetActive(
+            state != GameManager.GameState.MainMenu && state != GameManager.GameState.Loading
+        );
     }
 }

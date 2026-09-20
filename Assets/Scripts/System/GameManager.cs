@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     {
         MainMenu,
         Playing,
+        Loading,
         Waiting,
         Paused,
         LevelComplete,
@@ -18,6 +19,8 @@ public class GameManager : MonoBehaviour
     }
 
     public GameState State { get; private set; } = GameState.MainMenu;
+
+    public float LoadingProgress { get; private set; }
 
     [SerializeField]
     [Tooltip("The number of seconds to wait before switching to the LevelComplete state.")]
@@ -102,8 +105,23 @@ public class GameManager : MonoBehaviour
 
     private void LoadScene(int buildIndex)
     {
-        SceneManager.LoadScene(buildIndex);
+        StartCoroutine(LoadSceneAsync(buildIndex));
+    }
 
+    private IEnumerator LoadSceneAsync(int buildIndex)
+    {
+        LoadingProgress = 0f;
+        SetState(GameState.Loading);
+
+        AsyncOperation operation = SceneManager.LoadSceneAsync(buildIndex);
+
+        while (!operation.isDone)
+        {
+            LoadingProgress = Mathf.Clamp01(operation.progress / 0.9f);
+            yield return null;
+        }
+
+        LoadingProgress = 1f;
         SetState(buildIndex == MainMenuIdx ? GameState.MainMenu : GameState.Playing);
     }
 
