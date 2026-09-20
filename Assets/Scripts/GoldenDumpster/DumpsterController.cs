@@ -17,6 +17,7 @@ public class DumpsterController : MonoBehaviour
     private Animator animator;
     private AudioSource audioSource;
     private bool isOpen = false;
+    private bool hasCompleted = false;
 
     private void Start()
     {
@@ -27,8 +28,9 @@ public class DumpsterController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "cat")
+        if (other.gameObject.tag == "cat" && !hasCompleted)
         {
+            hasCompleted = true;
             particles.Play();
             audioSource.Play();
             LevelComplete?.Invoke();
