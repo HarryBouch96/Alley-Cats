@@ -5015,7 +5015,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 1
   m_Constraints: 8
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!135 &4246715120952701901
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -5052,7 +5052,7 @@ MonoBehaviour:
   stoppedSpeed: 1.5
   stoppedDuration: 2
   pounceAudioClip: {fileID: 8300000, guid: eed2ac6da66ae44a0b3e37fd24035769, type: 3}
-  collisionAudioClip: {fileID: 8300000, guid: 8a346f3cab789514a8642dca94a62899, type: 3}
+  impactAudioClip: {fileID: 8300000, guid: 8a346f3cab789514a8642dca94a62899, type: 3}
   minImpactVelocity: 1
 --- !u!82 &6977391325316111446
 AudioSource:
