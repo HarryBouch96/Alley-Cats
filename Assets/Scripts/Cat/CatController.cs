@@ -26,10 +26,21 @@ public class CatController : MonoBehaviour
     [Tooltip("The audio clip to play when the cat pounces.")]
     private AudioClip pounceAudioClip;
 
+    [SerializeField]
+    [Tooltip("The audio clip to play when the cat collides with something.")]
+    private AudioClip impactAudioClip;
+
+    [SerializeField]
+    [Tooltip(
+        "The minimum velocity that the cat must have during a collision for the dust particles and sound effect to trigger."
+    )]
+    private float minImpactVelocity = 1f;
+
     private Rigidbody rb;
     private Bounds levelBounds;
-    private float stoppedTimer;
     private AudioSource audioSource;
+    private ParticleSystem dustParticles;
+    private float stoppedTimer;
     private bool hasLaunched;
     private bool hasBounds;
     private bool hasPounced = false;
@@ -41,6 +52,29 @@ public class CatController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         hasPounced = false;
         audioSource = GetComponent<AudioSource>();
+        dustParticles = GetComponentInChildren<ParticleSystem>();
+
+        // Put the dust particles in the scene root
+        // so they can be positioned in world space
+        dustParticles.transform.SetParent(null, true);
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.relativeVelocity.magnitude >= minImpactVelocity)
+        {
+            audioSource.PlayOneShot(impactAudioClip);
+
+            ContactPoint contact = collision.GetContact(0);
+            Vector3 pos = contact.point;
+            Vector3 rot = contact.normal;
+
+            // Position the dust particles at the point of impact
+            // and align the cone's rotation with the surface normal
+            dustParticles.transform.SetPositionAndRotation(pos, Quaternion.LookRotation(rot));
+
+            dustParticles.Emit(Random.Range(15, 31));
+        }
     }
 
     private void FixedUpdate()
